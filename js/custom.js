@@ -547,20 +547,24 @@ $(window).load(function() {
     }
     $(".accident-card .acc-type").html("사고유형 - " + victimValues[i].accType);
     $(".accident-card .full-des").html(victimValues[i].accSummary);
-	$(".accident-card .main").html(victimValues[i].emp1Name);
-	$(".accident-card .sub").html(victimValues[i].emp2Name);
+
+		$(".accident-card .main").html(victimValues[i].emp1Name);
+		$(".accident-card .sub").html(victimValues[i].emp2Name);
+
     if (victimValues[i].act == "-"|| victimValues[i].indict == "#N/A") {
       $(".accident-card .act-info").hide();
     } else {
       $(".accident-card .act-info").show();
       $(".accident-card .act-info").html("<em class='head'>행정조치</em>" + victimValues[i].act);
     }
+
     if (victimValues[i].indict == "-" || victimValues[i].indict == "#N/A") {
       $(".accident-card .indictment-info").hide();
     } else {
       $(".accident-card .indictment-info").show();
       $(".accident-card .indictment-info").html("<em class='head'>송치의견</em>" + victimValues[i].indict);
     }
+
     $(".accident-card .card-wrap .acc-due .due-list").html("");
     if (victimValues[i].noRt == false) {
       $(".acc-due").hide();
@@ -970,1145 +974,189 @@ $(window).load(function() {
     cal_zooming(z_i);
   });
 
-  // (End) Calendar Heatmap
-
-
-  // 원청회사별 그래프
-  var accByCompany = [{
-    "key": "현대차",
-    "acc": 32
-  }, {
-    "key": "지자체",
-    "acc": 31
-  }, {
-    "key": "대림",
-    "acc": 31
-  }, {
-    "key": "포스코",
-    "acc": 27
-  }, {
-    "key": "대우건설",
-    "acc": 26
-  }, {
-    "key": "GS",
-    "acc": 20
-  }, {
-    "key": "현대중공업",
-    "acc": 20
-  }, {
-    "key": "HDC",
-    "acc": 19
-  }, {
-    "key": "삼성",
-    "acc": 17
-  }, {
-    "key": "효성",
-    "acc": 16
-  }, {
-    "key": "롯데",
-    "acc": 16
-  }, {
-    "key": "SK",
-    "acc": 14
-  }, {
-    "key": "LG",
-    "acc": 13
-  }, {
-    "key": "중흥건설",
-    "acc": 13
-  }, {
-    "key": "공기업",
-    "acc": 13
-  }, {
-    "key": "두산",
-    "acc": 12
-  }, {
-    "key": "대우조선",
-    "acc": 12
-  }, {
-    "key": "한화",
-    "acc": 11
-  }, {
-    "key": "LS",
-    "acc": 10
-  }];
-
-  var drawGraphCompany = function() {
-    var svgBody = d3.select("#svgCompany");
-    var Values = accByCompany.map(function(d) {
-      return d.acc;
-    });
-    var maxValue = d3.max(Values);
-    var minValue = d3.min(Values);
-    var colorFn = d3
-      .scaleSequential(d3.interpolateOrRd)
-      .domain([minValue, maxValue]);
-
-    var tooltip = d3.select(".company-tooltip");
-
-    if (isMobile == true) {
-      var barHeight = 15;
-      var barMargin = 2;
-      var multipleKey = 7;
-      var labelWidth = 70;
-      var can_width = $(".graph-company").width();
-      var can_height = (barHeight + barMargin) * accByCompany.length;
-      $("#svgCompany").css({
-        "width": can_width + "px",
-        "height": can_height + "px"
-      });
-
-      var canvas = svgBody.append("g")
-        .attr("width", can_width)
-        .attr("height", can_height)
-        .attr("transform", "translate(" + labelWidth + ",0)");
-
-      var GraphBar = canvas.selectAll("rect")
-        .data(accByCompany)
-        .enter().append("rect")
-        .attr("fill", function(d) {
-          return colorFn(d.acc);
-        })
-        .attr("height", barHeight)
-        .attr("class", "bar")
-        .attr("width", function(d) {
-          return d.acc * multipleKey;
-        }).attr("y", function(d, i) {
-          return i * (barHeight + barMargin);
-        }).attr("x", function(d) {
-          return 0;
-        });
-
-      var labelHolder = canvas.append("g")
-        .attr("transform", "translate(" + (-labelWidth) + ",14)")
-
-      var Xaxis = labelHolder.selectAll("text")
-        .data(accByCompany)
-        .enter()
-        .append("text")
-        .attr("width", "50")
-        .attr("transform", function(d, i) {
-          return "translate(0, " + (i * (barHeight + barMargin)) + ")";
-        }).attr("fill", "rgba(255,255,255,0.8)")
-        .attr("font-size", "10px")
-        .attr("class", "graph-Xaxis")
-        .attr("text-anchor", "start")
-        .text(function(d) {
-          return d.key;
-        });
-
-      var yScale = d3.scaleLinear()
-        .range([0, maxValue * multipleKey])
-        .domain([0, maxValue]);
-
-      var yAxis = canvas.append("g")
-        .attr("class", "graph-Yaxis")
-        .attr("transform", "translate(0,-10)")
-        .call(d3.axisTop(yScale).ticks(5).tickFormat(d3.format("d")));
-
-      GraphBar.on("click", function(d) {
-          d3.select(this).classed("barHover", true);
-          tooltip.transition().duration(100).style("opacity", "1").style("height", "auto");
-          tooltip.html("<p class='name'>" + d.key + "</p>" + "<p class='numb'>" + d.acc + "명 </p>")
-        })
-        .on("mouseout", function(d) {
-          d3.select(this).classed("barHover", false);
-          tooltip.transition().duration(100).style("opacity", "0");
-        });
-
-    } else {
-      var barWidth = 40;
-      var barMargin = 2;
-      var multipleKey = 5;
-      var can_width = (barWidth + barMargin) * accByCompany.length;
-      var can_height = maxValue * multipleKey;
-      $("#svgCompany").css({
-        "width": can_width + "px",
-        "height": can_height + "px"
-      });
-
-      var canvas = svgBody.append("g")
-        .attr("width", can_width)
-        .attr("height", can_height);
-      var GraphBar = canvas.selectAll("rect")
-        .data(accByCompany)
-        .enter().append("rect")
-        .attr("fill", function(d) {
-          return colorFn(d.acc);
-        })
-        .attr("width", barWidth)
-        .attr("class", "bar")
-        .attr("height", function(d) {
-          return d.acc * 5;
-        }).attr("x", function(d, i) {
-          return i * (barWidth + barMargin);
-        }).attr("y", function(d) {
-          return can_height - (d.acc * 5);
-        });
-
-
-      GraphBar.on("mouseover", function(d) {
-          d3.select(this).classed("barHover", true);
-          tooltip.transition().duration(100).style("opacity", "1").style("height", "auto");
-          tooltip.html("<p class='name'>" + d.key + "</p>" + "<p class='numb'>" + d.acc + "건 </p>")
-        })
-        .on("mouseout", function(d) {
-          d3.select(this).classed("barHover", false);
-          tooltip.transition().duration(100).style("opacity", "0");
-        });
-
-      var labelHolder = canvas.append("g")
-        .attr("transform", "translate(" + (barWidth + barMargin) / 2 + "," + (can_height + 20) + ")")
-
-      var Xaxis = labelHolder.selectAll("text")
-        .data(accByCompany)
-        .enter()
-        .append("text")
-        .attr("width", "30")
-        .attr("transform", function(d, i) {
-          return "translate(" + (i * (barWidth + barMargin)) + ", 0)";
-        }).attr("fill", "rgba(255,255,255,0.8)")
-        .attr("font-size", "10px")
-        .attr("class", "graph-Xaxis")
-        .attr("text-anchor", "middle")
-        .text(function(d) {
-          return d.key;
-        });
-      var yScale = d3.scaleLinear()
-        .range([0, can_height])
-        .domain([maxValue, 0]);
-
-      var yAxis = canvas.append("g")
-        .attr("class", "graph-Yaxis")
-        .attr("transform", "translate(-10,0)")
-        .call(d3.axisLeft(yScale).ticks(5).tickFormat(d3.format("d")));
-
-
-    }
-  }
-  drawGraphCompany();
-  //  (End) 원청회사별 그래프
-
-  $(".swift-btn-holder .btn-tab ul li").on("click", function() {
-    var type = $(this).attr("data-type");
-    $(".swift-btn-holder .btn-tab ul li").removeClass("on");
-    $(this).addClass("on");
-
-    if (type == "full") {
-      $(".graph-fall2").hide();
-      $(".graph-fall").fadeIn();
-    } else if (type == "detail") {
-      $(".graph-fall").hide();
-      $(".graph-fall2").fadeIn();
-    }
-  });
-
-
-  // 추락높이 그래프
-  var fallHeight = [{
-    "height": "0~5m",
-    "acc": 261
-  }, {
-    "height": "6~10m",
-    "acc": 130
-  }, {
-    "height": "11~15m",
-    "acc": 57
-  }, {
-    "height": "16~20m",
-    "acc": 31
-  }, {
-    "height": "21~25m",
-    "acc": 14
-  }, {
-    "height": "26~30m",
-    "acc": 12
-  }, {
-    "height": "31~35m",
-    "acc": 5
-  }, {
-    "height": "36~40m",
-    "acc": 8
-  }, {
-    "height": "41~45m",
-    "acc": 9
-  }, {
-    "height": "46m이상",
-    "acc": 16
-  }];
-  var fallHeightUnder = [{
-    "height": "1m 이하",
-    "acc": 10
-  }, {
-    "height": "1m",
-    "acc": 45
-  }, {
-    "height": "2m",
-    "acc": 67
-  }, {
-    "height": "3m",
-    "acc": 76
-  }, {
-    "height": "4m",
-    "acc": 47
-  }, {
-    "height": "5m",
-    "acc": 48
-  }, {
-    "height": "6m",
-    "acc": 34
-  }, {
-    "height": "7m",
-    "acc": 30
-  }, {
-    "height": "8m",
-    "acc": 29
-  }, {
-    "height": "9m",
-    "acc": 24
-  }, {
-    "height": "10m",
-    "acc": 17
-  }];
-  var fallHeightDetail = [{
-    "height": 0,
-    "acc": 10
-  }, {
-    "height": 1,
-    "acc": 45
-  }, {
-    "height": 2,
-    "acc": 67
-  }, {
-    "height": 3,
-    "acc": 76
-  }, {
-    "height": 4,
-    "acc": 47
-  }, {
-    "height": 5,
-    "acc": 48
-  }, {
-    "height": 6,
-    "acc": 34
-  }, {
-    "height": 7,
-    "acc": 30
-  }, {
-    "height": 8,
-    "acc": 29
-  }, {
-    "height": 9,
-    "acc": 24
-  }, {
-    "height": 10,
-    "acc": 17
-  }, {
-    "height": 11,
-    "acc": 9
-  }, {
-    "height": 12,
-    "acc": 19
-  }, {
-    "height": 13,
-    "acc": 15
-  }, {
-    "height": 14,
-    "acc": 8
-  }, {
-    "height": 15,
-    "acc": 9
-  }, {
-    "height": 16,
-    "acc": 4
-  }, {
-    "height": 17,
-    "acc": 10
-  }, {
-    "height": 18,
-    "acc": 4
-  }, {
-    "height": 19,
-    "acc": 6
-  }, {
-    "height": 20,
-    "acc": 7
-  }, {
-    "height": 21,
-    "acc": 3
-  }, {
-    "height": 22,
-    "acc": 7
-  }, {
-    "height": 23,
-    "acc": 1
-  }, {
-    "height": 24,
-    "acc": 2
-  }, {
-    "height": 25,
-    "acc": 3
-  }, {
-    "height": 26,
-    "acc": 4
-  }, {
-    "height": 27,
-    "acc": 2
-  }, {
-    "height": 28,
-    "acc": 0
-  }, {
-    "height": 29,
-    "acc": 1
-  }, {
-    "height": 30,
-    "acc": 6
-  }, {
-    "height": 31,
-    "acc": 0
-  }, {
-    "height": 32,
-    "acc": 2
-  }, {
-    "height": 33,
-    "acc": 0
-  }, {
-    "height": 34,
-    "acc": 0
-  }, {
-    "height": 35,
-    "acc": 4
-  }, {
-    "height": 36,
-    "acc": 1
-  }, {
-    "height": 37,
-    "acc": 3
-  }, {
-    "height": 38,
-    "acc": 0
-  }, {
-    "height": 39,
-    "acc": 1
-  }, {
-    "height": 40,
-    "acc": 3
-  }, {
-    "height": 41,
-    "acc": 1
-  }, {
-    "height": 42,
-    "acc": 3
-  }, {
-    "height": 43,
-    "acc": 1
-  }, {
-    "height": 44,
-    "acc": 0
-  }, {
-    "height": 45,
-    "acc": 4
-  }, {
-    "height": 46,
-    "acc": 1
-  }, {
-    "height": 47,
-    "acc": 0
-  }, {
-    "height": 48,
-    "acc": 0
-  }, {
-    "height": 49,
-    "acc": 0
-  }, {
-    "height": 50,
-    "acc": 0
-  }, {
-    "height": 51,
-    "acc": 2
-  }, {
-    "height": 52,
-    "acc": 0
-  }, {
-    "height": 53,
-    "acc": 1
-  }, {
-    "height": 54,
-    "acc": 1
-  }, {
-    "height": 55,
-    "acc": 0
-  }, {
-    "height": 56,
-    "acc": 1
-  }, {
-    "height": 57,
-    "acc": 0
-  }, {
-    "height": 58,
-    "acc": 1
-  }, {
-    "height": 59,
-    "acc": 0
-  }, {
-    "height": 60,
-    "acc": 1
-  }, {
-    "height": 61,
-    "acc": 0
-  }, {
-    "height": 62,
-    "acc": 0
-  }, {
-    "height": 63,
-    "acc": 1
-  }, {
-    "height": 64,
-    "acc": 0
-  }, {
-    "height": 65,
-    "acc": 0
-  }, {
-    "height": 66,
-    "acc": 0
-  }, {
-    "height": 67,
-    "acc": 0
-  }, {
-    "height": 68,
-    "acc": 2
-  }, {
-    "height": 69,
-    "acc": 0
-  }, {
-    "height": 70,
-    "acc": 1
-  }, {
-    "height": 71,
-    "acc": 1
-  }, {
-    "height": 72,
-    "acc": 0
-  }, {
-    "height": 73,
-    "acc": 0
-  }, {
-    "height": 74,
-    "acc": 0
-  }, {
-    "height": 75,
-    "acc": 0
-  }, {
-    "height": 76,
-    "acc": 0
-  }, {
-    "height": 77,
-    "acc": 0
-  }, {
-    "height": 78,
-    "acc": 0
-  }, {
-    "height": 79,
-    "acc": 0
-  }, {
-    "height": 80,
-    "acc": 0
-  }, {
-    "height": 81,
-    "acc": 0
-  }, {
-    "height": 82,
-    "acc": 0
-  }, {
-    "height": 83,
-    "acc": 0
-  }, {
-    "height": 84,
-    "acc": 1
-  }, {
-    "height": 85,
-    "acc": 0
-  }, {
-    "height": 86,
-    "acc": 1
-  }, {
-    "height": 87,
-    "acc": 0
-  }, {
-    "height": 88,
-    "acc": 1
-  }]
-  var drawGrapFallDetail = function() {
-
-    var svgBody = d3.select("#svgFall2");
-    var fallValues = fallHeightDetail.map(function(d) {
-      return d.acc;
-    });
-    var maxValue = d3.max(fallValues);
-    var minValue = d3.min(fallValues);
-    var colorFn = d3
-      .scaleSequential(d3.interpolateOrRd)
-      .domain([minValue, maxValue]);
-
-    var tooltip = d3.select(".fallDetail-tooltip");
-
-    if (isMobile == true) {
-      var barHeight = 20;
-      var barMargin = 2;
-      var multipleKey = 3;
-      var labelWidth = 50;
-      var can_width = $(".graph-fall2").width();
-      var can_height = (barHeight + barMargin) * fallHeightUnder.length;
-      $("#svgFall2").css({
-        "width": can_width + "px",
-        "height": can_height + "px"
-      });
-
-      var canvas = svgBody.append("g")
-        .attr("width", can_width)
-        .attr("height", can_height)
-        .attr("transform", "translate(" + labelWidth + ",0)");
-
-      var GraphBar = canvas.selectAll("rect")
-        .data(fallHeightUnder)
-        .enter().append("rect")
-        .attr("fill", function(d) {
-          return colorFn(d.acc);
-        })
-        .attr("height", barHeight)
-        .attr("class", "bar")
-        .attr("width", function(d) {
-          return d.acc * multipleKey;
-        }).attr("y", function(d, i) {
-          return i * (barHeight + barMargin);
-        }).attr("x", function(d) {
-          return 0;
-        });
-
-      var labelHolder = canvas.append("g")
-        .attr("transform", "translate(" + (-labelWidth) + ",12)")
-
-      var Xaxis = labelHolder.selectAll("text")
-        .data(fallHeightUnder)
-        .enter()
-        .append("text")
-        .attr("width", "50")
-        .attr("transform", function(d, i) {
-          return "translate(0, " + (i * (barHeight + barMargin)) + ")";
-        }).attr("fill", "rgba(255,255,255,0.8)")
-        .attr("font-size", "10px")
-        .attr("class", "graph-Xaxis")
-        .attr("text-anchor", "start")
-        .text(function(d) {
-          return d.height;
-        });
-
-      var yScale = d3.scaleLinear()
-        .range([0, maxValue * multipleKey])
-        .domain([0, maxValue]);
-
-      var yAxis = canvas.append("g")
-        .attr("class", "graph-Yaxis")
-        .attr("transform", "translate(0,-10)")
-        .call(d3.axisTop(yScale).ticks(5).tickFormat(d3.format("d")));
-
-      GraphBar.on("click", function(d) {
-          d3.select(this).classed("barHover", true);
-          tooltip.transition().duration(100).style("opacity", "1").style("height", "auto");
-          tooltip.html("<p class='name'>" + d.height + "</p>" + "<p class='numb'>" + d.acc + "명 </p>")
-        })
-        .on("mouseout", function(d) {
-          d3.select(this).classed("barHover", false);
-          tooltip.transition().duration(100).style("opacity", "0");
-        });
-
-    } else {
-      var barWidth = 35;
-      var barMargin = 5;
-      var can_width = (barWidth + barMargin) * fallHeightUnder.length;
-      var can_height = (isMobile == true) ? 600 : maxValue * 3;
-      $("#svgFall2").css({
-        "width": can_width + "px",
-        "height": can_height + "px"
-      });
-      var colorFn = d3
-        .scaleSequential(d3.interpolateOrRd)
-        .domain([minValue, maxValue]);
-
-      var canvas = svgBody.append("g")
-        .attr("width", can_width)
-        .attr("height", can_height);
-
-      var GraphBar = canvas.selectAll("rect")
-        .data(fallHeightUnder)
-        .enter().append("rect")
-        .attr("fill", "#ff9320")
-        .attr("width", barWidth)
-        .attr("class", "bar")
-        .attr("height", function(d) {
-          return d.acc * 3;
-        }).attr("x", function(d, i) {
-          return i * (barWidth + barMargin);
-        }).attr("y", function(d) {
-          return can_height - (d.acc * 3);
-        });
-
-      var labelHolder = canvas.append("g")
-        .attr("transform", "translate(" + barWidth / 2 + "," + (can_height + 20) + ")")
-
-      var Xaxis = labelHolder.selectAll("text")
-        .data(fallHeightUnder)
-        .enter()
-        .append("text")
-        .attr("width", "50")
-        .attr("transform", function(d, i) {
-          return "translate(" + (i * (barWidth + barMargin)) + ", 0)";
-        }).attr("fill", "rgba(255,255,255,0.8)")
-        .attr("font-size", "10px")
-        .attr("class", "graph-Xaxis")
-        .attr("text-anchor", "middle")
-        .text(function(d) {
-          return d.height;
-        });
-
-
-      GraphBar.on("mouseover", function(d) {
-          d3.select(this).classed("barHover", true);
-          tooltip.transition().duration(100).style("opacity", "1").style("height", "auto");
-          tooltip.html("<p class='name'>" + d.height + "</p>" + "<p class='numb'>" + d.acc + "명 </p>")
-        })
-        .on("mouseout", function(d) {
-          d3.select(this).classed("barHover", false);
-          tooltip.transition().duration(100).style("opacity", "0");
-        });
-
-      var yScale = d3.scaleLinear()
-        .range([0, can_height])
-        .domain([maxValue, 0]);
-
-      var yAxis = canvas.append("g")
-        .attr("class", "graph-Yaxis")
-        .attr("transform", "translate(-10,0)")
-        .call(d3.axisLeft(yScale).ticks(5).tickFormat(d3.format("d")));
-    }
-
-  };
-  drawGrapFallDetail();
-
-  var drawGrapFall = function() {
-    var svgBody = d3.select("#svgFall");
-    var fallValues = fallHeight.map(function(d) {
-      return d.acc;
-    });
-    var maxValue = d3.max(fallValues);
-    var minValue = d3.min(fallValues);
-    var colorFn = d3
-      .scaleSequential(d3.interpolateOrRd)
-      .domain([minValue, maxValue]);
-
-    var tooltip = d3.select(".fall-tooltip");
-
-    if (isMobile == true) {
-      var barHeight = 20;
-      var barMargin = 2;
-      var multipleKey = 1;
-      var labelWidth = 50;
-      var can_width = $(".graph-fall").width();
-      var can_height = (barHeight + barMargin) * fallHeight.length;
-      $("#svgFall").css({
-        "width": can_width + "px",
-        "height": can_height + "px"
-      });
-
-      var canvas = svgBody.append("g")
-        .attr("width", can_width)
-        .attr("height", can_height)
-        .attr("transform", "translate(" + labelWidth + ",0)");
-
-      var GraphBar = canvas.selectAll("rect")
-        .data(fallHeight)
-        .enter().append("rect")
-        .attr("fill", function(d) {
-          return colorFn(d.acc);
-        })
-        .attr("height", barHeight)
-        .attr("class", "bar")
-        .attr("width", function(d) {
-          return d.acc * multipleKey;
-        }).attr("y", function(d, i) {
-          return i * (barHeight + barMargin);
-        }).attr("x", function(d) {
-          return 0;
-        });
-
-      var labelHolder = canvas.append("g")
-        .attr("transform", "translate(" + (-labelWidth) + ",12)")
-
-      var Xaxis = labelHolder.selectAll("text")
-        .data(fallHeight)
-        .enter()
-        .append("text")
-        .attr("width", "50")
-        .attr("transform", function(d, i) {
-          return "translate(0, " + (i * (barHeight + barMargin)) + ")";
-        }).attr("fill", "rgba(255,255,255,0.8)")
-        .attr("font-size", "10px")
-        .attr("class", "graph-Xaxis")
-        .attr("text-anchor", "start")
-        .text(function(d) {
-          return d.height;
-        });
-
-      var yScale = d3.scaleLinear()
-        .range([0, maxValue * multipleKey])
-        .domain([0, maxValue]);
-
-      var yAxis = canvas.append("g")
-        .attr("class", "graph-Yaxis")
-        .attr("transform", "translate(0,-10)")
-        .call(d3.axisTop(yScale).ticks(5).tickFormat(d3.format("d")));
-
-      GraphBar.on("click", function(d) {
-          d3.select(this).classed("barHover", true);
-          tooltip.transition().duration(100).style("opacity", "1").style("height", "auto");
-          tooltip.html("<p class='name'>" + d.height + "</p>" + "<p class='numb'>" + d.acc + "명 </p>")
-        })
-        .on("mouseout", function(d) {
-          d3.select(this).classed("barHover", false);
-          tooltip.transition().duration(100).style("opacity", "0");
-        });
-
-    } else {
-
-      var barWidth = 50;
-      var barMargin = 3;
-      var can_width = $(".graph-fall").width();
-      var can_height = (isMobile == true) ? 600 : 261;
-      $("#svgFall").css({
-        "width": can_width + "px",
-        "height": can_height + "px"
-      });
-      var canvas = svgBody.append("g")
-        .attr("width", can_width)
-        .attr("height", can_height);
-      var GraphBar = canvas.selectAll("rect")
-        .data(fallHeight)
-        .enter().append("rect")
-        .attr("fill", "#ff8834")
-        .attr("width", barWidth)
-        .attr("class", "bar")
-        .attr("height", function(d) {
-          return d.acc;
-        }).attr("x", function(d, i) {
-          return i * (barWidth + barMargin);
-        }).attr("y", function(d) {
-          return can_height - (d.acc);
-        });
-
-      var labelHolder = canvas.append("g")
-        .attr("transform", "translate(" + barWidth / 2 + "," + (can_height + 20) + ")")
-
-      var Xaxis = labelHolder.selectAll("text")
-        .data(fallHeight)
-        .enter()
-        .append("text")
-        .attr("width", "50")
-        .attr("transform", function(d, i) {
-          return "translate(" + (i * (barWidth + barMargin)) + ", 0)";
-        }).attr("fill", "rgba(255,255,255,0.8)")
-        .attr("font-size", "10px")
-        .attr("class", "graph-Xaxis")
-        .attr("text-anchor", "middle")
-        .text(function(d) {
-          return d.height;
-        });
-      GraphBar.on("mouseover", function(d) {
-          d3.select(this).classed("barHover", true);
-          tooltip.transition().duration(100).style("opacity", "1").style("height", "auto");
-          tooltip.html("<p class='name'>" + d.height + "</p>" + "<p class='numb'>" + d.acc + "명 </p>")
-        })
-        .on("mouseout", function(d) {
-          d3.select(this).classed("barHover", false);
-          tooltip.transition().duration(100).style("opacity", "0");
-        });
-
-      var yScale = d3.scaleLinear()
-        .range([0, can_height])
-        .domain([261, 0]);
-
-      var yAxis = canvas.append("g")
-        .attr("class", "graph-Yaxis")
-        .attr("transform", "translate(-10,0)")
-        .call(d3.axisLeft(yScale).ticks(5).tickFormat(d3.format("d")));
-    }
-  }
-
-  drawGrapFall();
-
-
-
-  // 사고시간 그래프
-  var timeAcc = [{
-    "time": "0:00~0:59",
-    "acc": 6
-  }, {
-    "time": "1:00~1:59",
-    "acc": 1
-  }, {
-    "time": "2:00~2:59",
-    "acc": 3
-  }, {
-    "time": "3:00~3:59",
-    "acc": 4
-  }, {
-    "time": "4:00~4:59",
-    "acc": 4
-  }, {
-    "time": "5:00~5:59",
-    "acc": 5
-  }, {
-    "time": "6:00~6:59",
-    "acc": 17
-  }, {
-    "time": "7:00~7:59",
-    "acc": 44
-  }, {
-    "time": "8:00~8:59",
-    "acc": 120
-  }, {
-    "time": "9:00~9:59",
-    "acc": 134
-  }, {
-    "time": "10:00~10:59",
-    "acc": 160
-  }, {
-    "time": "11:00~11:59",
-    "acc": 137
-  }, {
-    "time": "12:00~12:59",
-    "acc": 63
-  }, {
-    "time": "13:00~13:59",
-    "acc": 122
-  }, {
-    "time": "14:00~14:59",
-    "acc": 127
-  }, {
-    "time": "15:00~15:59",
-    "acc": 121
-  }, {
-    "time": "16:00~16:59",
-    "acc": 87
-  }, {
-    "time": "17:00~17:59",
-    "acc": 38
-  }, {
-    "time": "18:00~18:59",
-    "acc": 12
-  }, {
-    "time": "19:00~19:59",
-    "acc": 12
-  }, {
-    "time": "20:00~20:59",
-    "acc": 11
-  }, {
-    "time": "21:00~21:59",
-    "acc": 13
-  }, {
-    "time": "22:00~22:59",
-    "acc": 9
-  }, {
-    "time": "23:00~23:59",
-    "acc": 11
-  }];
-
-  var drawGrapTime = function() {
-    var svgBody = d3.select("#svgTime");
-    var fallValues = timeAcc.map(function(d) {
-      return d.acc;
-    });
-    var maxValue = d3.max(fallValues);
-    var minValue = d3.min(fallValues);
-    var colorFn = d3
-      .scaleSequential(d3.interpolateOrRd)
-      .domain([minValue, maxValue]);
-
-    var tooltip = d3.select(".time-tooltip");
-
-    if (isMobile == true) {
-      var barHeight = 15;
-      var barMargin = 2;
-      var multipleKey = 1.5;
-      var labelWidth = 70;
-      var can_width = $(".graph-fall").width();
-      var can_height = (barHeight + barMargin) * timeAcc.length;
-      $("#svgTime").css({
-        "width": can_width + "px",
-        "height": can_height + "px"
-      });
-
-      var canvas = svgBody.append("g")
-        .attr("width", can_width)
-        .attr("height", can_height)
-        .attr("transform", "translate(" + labelWidth + ",0)");
-
-      var GraphBar = canvas.selectAll("rect")
-        .data(timeAcc)
-        .enter().append("rect")
-        .attr("fill", function(d) {
-          return colorFn(d.acc);
-        })
-        .attr("height", barHeight)
-        .attr("class", "bar")
-        .attr("width", function(d) {
-          return d.acc * multipleKey;
-        }).attr("y", function(d, i) {
-          return i * (barHeight + barMargin);
-        }).attr("x", function(d) {
-          return 0;
-        });
-
-      var labelHolder = canvas.append("g")
-        .attr("transform", "translate(" + (-labelWidth) + ",12)")
-
-      var Xaxis = labelHolder.selectAll("text")
-        .data(timeAcc)
-        .enter()
-        .append("text")
-        .attr("width", "50")
-        .attr("transform", function(d, i) {
-          return "translate(0, " + (i * (barHeight + barMargin)) + ")";
-        }).attr("fill", "rgba(255,255,255,0.8)")
-        .attr("font-size", "10px")
-        .attr("class", "graph-Xaxis")
-        .attr("text-anchor", "start")
-        .text(function(d) {
-          return d.time;
-        });
-
-      var yScale = d3.scaleLinear()
-        .range([0, maxValue * multipleKey])
-        .domain([0, maxValue]);
-
-      var yAxis = canvas.append("g")
-        .attr("class", "graph-Yaxis")
-        .attr("transform", "translate(0,-10)")
-        .call(d3.axisTop(yScale).ticks(5).tickFormat(d3.format("d")));
-
-      GraphBar.on("click", function(d) {
-          d3.select(this).classed("barHover", true);
-          tooltip.transition().duration(100).style("opacity", "1").style("height", "auto");
-          tooltip.html("<p class='name'>" + d.time + "</p>" + "<p class='numb'>" + d.acc + "명 </p>")
-        })
-        .on("mouseout", function(d) {
-          d3.select(this).classed("barHover", false);
-          tooltip.transition().duration(100).style("opacity", "0");
-        });
-
-    } else {
-
-      var barWidth = 52;
-      var barMargin = 3;
-      var can_width = (barWidth + barMargin) * timeAcc.length;
-      var can_height = (isMobile == true) ? 600 : maxValue * 2;
-      $("#svgTime").css({
-        "width": can_width + "px",
-        "height": can_height + "px"
-      });
-
-
-      var canvas = svgBody.append("g")
-        .attr("width", can_width)
-        .attr("height", can_height);
-
-      var GraphBar = canvas.selectAll("rect")
-        .data(timeAcc)
-        .enter().append("rect")
-        .attr("width", barWidth)
-        .attr("fill", function(d) {
-          return colorFn(d.acc);
-        })
-        .attr("class", "bar")
-        .attr("height", function(d) {
-          return d.acc * 2;
-        }).attr("x", function(d, i) {
-          return i * (barWidth + barMargin);
-        }).attr("y", function(d) {
-          return can_height - (d.acc * 2);
-        });
-
-      GraphBar.on("mouseover", function(d) {
-          d3.select(this).classed("barHover", true);
-          tooltip.transition().duration(100).style("opacity", "1").style("height", "auto");
-          tooltip.html("<p class='name'>" + d.time + "</p>" + "<p class='numb'>" + d.acc + "명 </p>")
-        })
-        .on("mouseout", function(d) {
-          d3.select(this).classed("barHover", false);
-          tooltip.transition().duration(100).style("opacity", "0");
-        });
-
-      var labelHolder = canvas.append("g")
-        .attr("transform", "translate(" + barWidth / 2 + "," + (can_height + 20) + ")")
-
-      var Xaxis = labelHolder.selectAll("text")
-        .data(timeAcc)
-        .enter()
-        .append("text")
-        .attr("width", "50")
-        .attr("transform", function(d, i) {
-          return "translate(" + (i * (barWidth + barMargin)) + ", 0)";
-        }).attr("fill", "rgba(255,255,255,0.8)")
-        .attr("font-size", "10px")
-        .attr("class", "graph-Xaxis")
-        .attr("text-anchor", "middle")
-        .text(function(d) {
-          return d.time;
-        });
-
-      var yScale = d3.scaleLinear()
-        .range([0, can_height])
-        .domain([maxValue, 0]);
-
-      var yAxis = canvas.append("g")
-        .attr("class", "graph-Yaxis")
-        .attr("transform", "translate(-10,0)")
-        .call(d3.axisLeft(yScale).ticks(5).tickFormat(d3.format("d")));
-    }
-
-  }
-  drawGrapTime();
-
-  function wrap(text, width) {
-    text.each(function() {
-      var text = d3.select(this),
-        words = text.text().split(/\s+/).reverse(),
-        word,
-        line = [],
-        lineNumber = 0,
-        lineHeight = 1.1, // ems
-        y = text.attr("y"),
-        dy = parseFloat(text.attr("dy")),
-        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-      while (word = words.pop()) {
-        line.push(word);
-        tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
-          line.pop();
-          tspan.text(line.join(" "));
-          line = [word];
-          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-        }
-      }
-    });
-  };
-
-  // (Start) Archive icon sorting
-  var iconSorting = function(ti, bi) {
-
-
-  }
-
-  // (End) Archive icon sorting
+    // (End) Calendar Heatmap
+	$(".swift-btn-holder .btn-tab ul li").on("click", function() {
+		var type = $(this).attr("data-type");
+		$(".swift-btn-holder .btn-tab ul li").removeClass("on");
+		$(this).addClass("on");
+
+		if (type == "full") {
+		  $(".graph-fall2").hide();
+		  $(".graph-fall").fadeIn();
+		} else if (type == "detail") {
+		  $(".graph-fall").hide();
+		  $(".graph-fall2").fadeIn();
+		}
+	});
+
+	// graph
+
+	var graphData = [
+						[{key:"현대차",acc:32},{key:"지자체",acc:31},{key:"대림",acc:31},{key:"포스코",acc:27},{key:"대우건설",acc:26},{key:"GS",acc:20},{key:"현대중공업",acc:20},{key:"HDC",acc:19},{key:"삼성",acc:17},{key:"효성",acc:16},{key:"롯데",acc:16},{key:"SK",acc:14},{key:"LG",acc:13},{key:"중흥건설",acc:13},{key:"공기업",acc:13},{key:"두산",acc:12},{key:"대우조선",acc:12},{key:"한화",acc:11},{key:"LS",acc:10}],
+						[{key:"0~5m",acc:261},{key:"6~10m",acc:130},{key:"11~15m",acc:57},{key:"16~20m",acc:31},{key:"21~25m",acc:14},{key:"26~30m",acc:12},{key:"31~35m",acc:5},{key:"36~40m",acc:8},{key:"41~45m",acc:9},{key:"46m이상",acc:16}],
+						[{key:"1m 이하",acc:10},{key:"1m",acc:45},{key:"2m",acc:67},{key:"3m",acc:76},{key:"4m",acc:47},{key:"5m",acc:48},{key:"6m",acc:34},{key:"7m",acc:30},{key:"8m",acc:29},{key:"9m",acc:24},{key:"10m",acc:17}],
+						[{key:"0:00~0:59",acc:6},{key:"1:00~1:59",acc:1},{key:"2:00~2:59",acc:3},{key:"3:00~3:59",acc:4},{key:"4:00~4:59",acc:4},{key:"5:00~5:59",acc:5},{key:"6:00~6:59",acc:17},{key:"7:00~7:59",acc:44},{key:"8:00~8:59",acc:120},{key:"9:00~9:59",acc:134},{key:"10:00~10:59",acc:160},{key:"11:00~11:59",acc:137},{key:"12:00~12:59",acc:63},{key:"13:00~13:59",acc:122},{key:"14:00~14:59",acc:127},{key:"15:00~15:59",acc:121},{key:"16:00~16:59",acc:87},{key:"17:00~17:59",acc:38},{key:"18:00~18:59",acc:12},{key:"19:00~19:59",acc:12},{key:"20:00~20:59",acc:11},{key:"21:00~21:59",acc:13},{key:"22:00~22:59",acc:9},{key:"23:00~23:59",acc:11}]
+					];
+	var svgBodyId = ["#svgCompany", "#svgFall", "#svgFall2", "#svgTime"];
+	var tooltipClass = [".company-tooltip", ".fall-tooltip", ".fallDetail-tooltip", ".time-tooltip"];
+	var graphEle = [{"barWidth": 40,"barHeight": 15,"barMarginPC": 2,"barMarginM": 2,"multipleKeyPC": 5,"multipleKeyM": 7,"labelWidth": 70},
+					{"barWidth": 50,"barHeight": 20,"barMarginPC": 3,"barMarginM": 2,"multipleKeyPC": 1,"multipleKeyM": 1,"labelWidth": 50},
+					{"barWidth": 35,"barHeight": 20,"barMarginPC": 5,"barMarginM": 2,"multipleKeyPC": 3,"multipleKeyM": 3,"labelWidth": 50},
+					{"barWidth": 52,"barHeight": 15,"barMarginPC": 3,"barMarginM": 2,"multipleKeyPC": 2,"multipleKeyM": 1.5,"labelWidth": 70}];
+
+	var drawingGraph = function(t){
+		var svgBody = d3.select(svgBodyId[t]);
+		var data = graphData[t];
+		var Values = data.map(function(d) {
+		  return d.acc;
+		});
+		var maxValue = d3.max(Values);
+		var minValue = d3.min(Values);
+		var colorFn = d3
+		  .scaleSequential(d3.interpolateOrRd)
+		  .domain([minValue, maxValue]);		
+		var tooltip = d3.select(tooltipClass[t]);
+		if (isMobile == true) {
+			var barHeight = graphEle[t].barHeight;
+			var barMargin =  graphEle[t].barMarginM;
+			var multipleKey = graphEle[t].multipleKeyM;
+			var labelWidth = graphEle[t].labelWidth;
+			var can_width = $(".d3-graph").eq(t).width();
+			var can_height = (barHeight + barMargin) * data.length;
+			$(svgBodyId[t]).css({
+				"width": can_width + "px",
+				"height": can_height + "px"
+			});
+		
+			var canvas = svgBody.append("g")
+			.attr("width", can_width)
+			.attr("height", can_height)
+			.attr("transform", "translate(" + labelWidth + ",0)");
+
+			var GraphBar = canvas.selectAll("rect")
+				.data(data)
+				.enter().append("rect")
+				.attr("fill", function(d) {
+				  return colorFn(d.acc);
+				})
+				.attr("height", barHeight)
+				.attr("class", "bar")
+				.attr("width", function(d) {
+				  return d.acc * multipleKey;
+				}).attr("y", function(d, i) {
+				  return i * (barHeight + barMargin);
+				}).attr("x", function(d) {
+				  return 0;
+				});
+
+			var labelHolder = canvas.append("g")
+				.attr("transform", "translate(" + (-labelWidth) + ",14)")
+
+			var Xaxis = labelHolder.selectAll("text")
+				.data(data)
+				.enter()
+				.append("text")
+				.attr("width", "50")
+				.attr("transform", function(d, i) {
+				  return "translate(0, " + (i * (barHeight + barMargin)) + ")";
+				}).attr("fill", "rgba(255,255,255,0.8)")
+				.attr("font-size", "10px")
+				.attr("class", "graph-Xaxis")
+				.attr("text-anchor", "start")
+				.text(function(d) {
+				  return d.key;
+				});
+
+			var yScale = d3.scaleLinear()
+				.range([0, maxValue * multipleKey])
+				.domain([0, maxValue]);
+
+		    var yAxis = canvas.append("g")
+				.attr("class", "graph-Yaxis")
+				.attr("transform", "translate(0,-10)")
+				.call(d3.axisTop(yScale).ticks(5).tickFormat(d3.format("d")));
+
+			GraphBar.on("click", function(d) {
+				  d3.select(this).classed("barHover", true);
+				  tooltip.transition().duration(100).style("opacity", "1").style("height", "auto");
+				  tooltip.html("<p class='name'>" + d.key + "</p>" + "<p class='numb'>" + d.acc + "명 </p>")
+				})
+				.on("mouseout", function(d) {
+				  d3.select(this).classed("barHover", false);
+				  tooltip.transition().duration(100).style("opacity", "0");
+				});
+		}else {
+			var barWidth = graphEle[t].barWidth;
+			var barMargin = graphEle[t].barMarginPC;
+			var multipleKey = graphEle[t].multipleKeyPC;
+			var can_width = (barWidth + barMargin) * data.length;
+			var can_height = maxValue * multipleKey;
+			$(svgBodyId[t]).css({
+				"width": can_width + "px",
+				"height": can_height + "px"
+			});
+
+			var canvas = svgBody.append("g")
+				.attr("width", can_width)
+				.attr("height", can_height);
+			var GraphBar = canvas.selectAll("rect")
+				.data(data)
+				.enter().append("rect")
+				.attr("fill", function(d) {
+				  return colorFn(d.acc);
+				})
+				.attr("width", barWidth)
+				.attr("class", "bar")
+				.attr("height", function(d) {
+				  return d.acc * multipleKey;
+				}).attr("x", function(d, i) {
+				  return i * (barWidth + barMargin);
+				}).attr("y", function(d) {
+				  return can_height - (d.acc * multipleKey);
+				});
+
+			GraphBar.on("mouseover", function(d) {
+				d3.select(this).classed("barHover", true);
+				tooltip.transition().duration(100).style("opacity", "1").style("height", "auto");
+				tooltip.html("<p class='name'>" + d.key + "</p>" + "<p class='numb'>" + d.acc + "건 </p>")
+			})
+			.on("mouseout", function(d) {
+				d3.select(this).classed("barHover", false);
+				tooltip.transition().duration(100).style("opacity", "0");
+			});
+
+			var labelHolder = canvas.append("g")
+				.attr("transform", "translate(" + (barWidth + barMargin) / 2 + "," + (can_height + 20) + ")")
+
+			var Xaxis = labelHolder.selectAll("text")
+				.data(data)
+				.enter()
+				.append("text")
+				.attr("width", "30")
+				.attr("transform", function(d, i) {
+				  return "translate(" + (i * (barWidth + barMargin)) + ", 0)";
+				}).attr("fill", "rgba(255,255,255,0.8)")
+				.attr("font-size", "10px")
+				.attr("class", "graph-Xaxis")
+				.attr("text-anchor", "middle")
+				.text(function(d) {
+				  return d.key;
+				});
+			var yScale = d3.scaleLinear()
+				.range([0, can_height])
+				.domain([maxValue, 0]);
+
+			var yAxis = canvas.append("g")
+				.attr("class", "graph-Yaxis")
+				.attr("transform", "translate(-10,0)")
+				.call(d3.axisLeft(yScale).ticks(5).tickFormat(d3.format("d")));
+
+	     }
+
+	};
+	for(g=0; g<graphData.length; g++){
+		drawingGraph(g);
+	};
 
   // (Start) Tab holder animation
   var togBtnHasClicked = false;
@@ -2132,47 +1180,49 @@ $(window).load(function() {
       $(this).addClass("on");
     }
 
-		var filtering = function(d, k, l){
+  // (End) Tab holder animation
 
-			switch (k) {
+  // (Start) Archive icon sorting
+	var filtering = function(d, k, l){
 
-				case 0:  //사고유형
- 					switch (l) {
-						case 0:
-							return d.accType == "떨어짐" ? 1 : 0;
-							break;
-						case 1:
-							return d.accType == "끼임" ? 1 : 0;
-							break;
-						case 2:
-							return d.accType == "물체에 맞음" ? 1 : 0;
-							break;
-						case 3:
-							return d.accType == "부딪힘" ? 1 : 0;
-							break;
-						case 4:
-							return d.accType == "깔림·뒤집힘" ? 1 : 0;
-							break;
-						case 5:
-							return ["떨어짐", "끼임", "물체에 맞음", "부딪힘", "깔림·뒤집힘"].indexOf(d.accType) == -1 ? 1 : 0;
-							break;
-					}
-					break;
+		switch (k) {
 
-				case 1:   // 업종
+			case 0:  //사고유형
+				switch (l) {
+					case 0:
+						return d.accType == "떨어짐" ? 1 : 0;
+						break;
+					case 1:
+						return d.accType == "끼임" ? 1 : 0;
+						break;
+					case 2:
+						return d.accType == "물체에 맞음" ? 1 : 0;
+						break;
+					case 3:
+						return d.accType == "부딪힘" ? 1 : 0;
+						break;
+					case 4:
+						return d.accType == "깔림·뒤집힘" ? 1 : 0;
+						break;
+					case 5:
+						return ["떨어짐", "끼임", "물체에 맞음", "부딪힘", "깔림·뒤집힘"].indexOf(d.accType) == -1 ? 1 : 0;
+						break;
+				}
+				break;
+
+			case 1:   // 업종
 			    switch (l) {
-			      case 0:
-							"건설업"
-			        return d.category == "건설업" ? 1 : 0;
-			        break;
-			      case 1:
-							return d.category == "제조업" ? 1 : 0;
-			        break;
-						case 2:
-							return d.category == "기타업종" ? 1 : 0;
-			        break;
-			    }
-					break;
+			       case 0:
+						return d.category == "건설업" ? 1 : 0;
+						break;
+			       case 1:
+						return d.category == "제조업" ? 1 : 0;
+						break;
+				   case 2:
+						return d.category == "기타업종" ? 1 : 0;
+						break;
+				}
+				break;
 
 				case 2:   // 공휴일 여부
 					switch (l) {
@@ -2276,7 +1326,6 @@ $(window).load(function() {
 			}
 
 		};
-
 		var archSelO = [];
 		var archSelN = [];
 		for (i=0; i<victimValues.length; i++){
@@ -2284,14 +1333,11 @@ $(window).load(function() {
 			archSelN.push(0);
 		}
 
-
 		icon.style("opacity", "1")
-
 		var selecting = false;
 		var onCheck = false;
 
 		$(".arch-tab .each-tab").each(function(k){
-
 			$(this).find("span").siblings().each(function(l){
 					if ($(this).hasClass("on")){
 						victimValues.forEach(function(v, i, a){
@@ -2301,19 +1347,15 @@ $(window).load(function() {
 						onCheck = true;
 					}
 			});
-
 			if (k > 0){
 				if (selecting == true){
-
 					if (k != 0 && archSelN.indexOf(1) == -1){
 						archSelN = archSelO.slice();
 					}
-
 					for (i=0; i<victimValues.length; i++){
-						archSelN[i] = archSelN[i] && archSelO[i];
+						archSelN[i] = archSelN[i] && archSelO[i];  
 						archSelO[i] = 0;
 					}
-
 				} else {
 					for (i=0; i<victimValues.length; i++){
 						archSelO[i] = 0;
@@ -2323,9 +1365,7 @@ $(window).load(function() {
 			} else if (k == 0){
 				archSelN = archSelO.slice();
 			}
-
 			selecting = false;
-
 		});
 
 		if (onCheck == true){
@@ -2340,7 +1380,7 @@ $(window).load(function() {
 		}
 
   });
-  // (End) Tab holder animation
+  // (End) Archive icon sorting  
 
 
   $(".hideme").css({
