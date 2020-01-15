@@ -161,7 +161,8 @@ box-sizing: border-box;  padding: 10px; background: #ececf1;  border-radius: 4px
 .common_header .sec_title {  font-size: 38px;letter-spacing: -2px;line-height: 50px;text-align: center;  padding-top: 30px;}
 .common_header .sec_title a { color:#111; }
 .common_header .sub_logo { position: absolute; top: 21px;  left: 0; z-index: 5;}
-.common_header .sub_logo a { width: 100px; display: block;}
+/* .common_header .sub_logo a { width: 100px; display: block;} */
+.common_header .sub_logo a {  background: url("http://img.khan.co.kr/spko/sub_2016/sub_logo.png") no-repeat scroll 0 0; width: 134px;height: 31px; display: block;text-indent: -9999px;}
 .common_header .sub_logo a img { width:100%; vertical-align: top; }
 .common_header  .logo_area .sns_wrap {  position: absolute;top: 84px; right: 0;  z-index: 30;}
 .common_header .logo_area .sns_wrap .social li { float: left;background: url("http://img.khan.co.kr/spko/main_2015/set_common.png?v=20180927") no-repeat scroll 0 0 transparent;
@@ -299,6 +300,9 @@ animation: imgPanning 15s linear infinite;  }
 .sec--2 .sec-title { opacity:0; }
 .sm-info { text-align: center; color:  #fff; opacity: 0.4;  font-size: 15px; max-width: 700px; margin: 0 auto;}
 .sm-info u { font-weight:bold; opacity:0.8; }
+.update-info { max-width: 700px; margin: 20px auto; }
+.update-info p {  opacity: 0.4;  font-size: 16px;  opacity:0.6; text-align: center; color:  #fff; }
+
 .tab-holder { width: 100%; margin: 40px auto; font-size: 20px;position: relative; }
 .sec--2 .tab-holder { opacity:0; }
 .arch-tab { box-sizing: border-box;  width: 1300px; padding: 25px 25px; border: 1px solid rgba(255,255,255,0.2);transition:all 0.3s ease 0s; background: #111;}
@@ -593,6 +597,10 @@ background-size:100%; background-attachment:fixed; opacity:0.6; }
 .banner-bg--2 { background: url("http://img.khan.co.kr/spko/storytelling/2019/labordeath/banner_02_bg.jpg") no-repeat;background-size:cover;}
 .banner-bg--3 { background: url("http://img.khan.co.kr/spko/storytelling/2019/labordeath/banner_03_bg.jpg") no-repeat;background-size:cover;}
 .banner-bg--4 { background: url("http://img.khan.co.kr/spko/storytelling/2019/labordeath/banner_04_bg.jpg") no-repeat;background-size:cover;}
+/* .banner-bg--6 { background: url("http://img.khan.co.kr/spko/storytelling/2019/labordeath/banner_06_bg.jpg") no-repeat;background-size:cover;} */
+.banner-bg--7 { background: url("http://img.khan.co.kr/spko/storytelling/2019/labordeath/banner_07_bg.jpg") no-repeat;background-size:cover;background-position: center;}
+.banner-bg--8 { background: url("http://img.khan.co.kr/spko/storytelling/2019/labordeath/banner_08_bg.jpg") no-repeat;background-size:cover; background-position: center;}
+
 .art-banner .publish-info { clear: both; width: 100%;text-align: center; color: #fff; font-size: 20px;font-weight: 200;letter-spacing: 4px;margin: 10px auto;padding-top: 20px;}
 .art-banner .publish-info  span { font-size:15px; letter-spacing:-0.01em;}
 .each-banner-wrap { position:relative; width:100%;s  height: 100%; box-sizing:border-box; padding-bottom: 60px;}
@@ -820,6 +828,8 @@ body.scrollOff{position:fixed;overflow:hidden;height:100%;}
 .tab-toggling { /* transition: none;  */}
 .top-display .victim {display:none; }
 .para-box p.sm  { font-size: 15px; }
+.update-info { width: 100%; box-sizing: border-box;padding: 0px 15px; text-align: left; word-break: keep-all;}
+.update-info p { color: #fff; font-size: 14px; text-align: left; }
 
 .icon-guide p { font-size: 15px; line-height:1.5; width: 100%; box-sizing: border-box; padding: 0px 20px; word-break: keep-all;}
 .icon-guide p span.jump { display:block; }
@@ -879,9 +889,6 @@ padding: 12px 2px; border-top: 1px solid #ff3a00;border-bottom: 1px solid #ff3a0
 .acc-photo-pc { display:none;}
 .acc-photo-mobile { display:block;}
 
-.cal-tooltip { width: 200px;  width: 200px;padding: 5px; box-shadow:none;top:0; }  
-.cal-tooltip .date {  display: inline-block; font-size: 14px;}
-.cal-tooltip .deathNumb { display: inline-block; font-size: 16px; margin-top: 0; margin-left: 10px;}
 .cal-shadow { position: absolute; top:0; width: 20px; height: 100%; }
 .calendar-heatmap .shadow-left {  left: 0px;background: linear-gradient(90deg,#111 80%,transparent);}
 .calendar-heatmap .shadow-right { right:10px; background: linear-gradient(90deg,transparent 20%,#111);}
@@ -901,6 +908,9 @@ font-weight: bold;color: #aba39c;padding: 5px 0; text-align: center;  border-rad
 .d3-graph-holder {box-sizing: border-box; padding: 0px 20px;}
 .d3-graph { margin: 60px auto;}
 .graph-tooltip { top: auto; bottom: 10px; }
+.cal-tooltip {padding: 10px; box-shadow:none;top:0; bottom: auto; background: rgba(0,0,0,0.3); }  
+.cal-tooltip .date {  display: inline-block; font-size: 14px;}
+.cal-tooltip .numb { display: inline-block; font-size: 16px; margin-top: 0; margin-left: 10px; }
 
 .intervw-area { margin: 150px auto;  margin-bottom: 0; }
 .intervw-area .intervw-wrap { box-sizing: border-box; padding: 0px 15px;}

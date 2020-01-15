@@ -13,7 +13,7 @@
 <!doctype html>
 <html>
 	<head>
-	<title>매일 김용균이 있었다…1692번의 죽음의 기록</title>
+	<title>매일 김용균이 있었다…1748번의 죽음의 기록</title>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,33 +25,34 @@
     <!-- SNS 공유 태그-->
     <meta property="og:url" content="http://news.khan.co.kr/kh_storytelling/2019/labordeath/" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="매일 김용균이 있었다…1692번의 죽음의 기록" />
+    <meta property="og:title" content="매일 김용균이 있었다…1748번의 죽음의 기록" />
     <meta property="og:description" content="오늘도 ‘3명’의 노동자가 사고로 목숨을 잃었다. 이들의 죽음이 통계숫자로만 남지 않도록 한 사람, 한 사람의 죽음을 기록했다." />
-    <meta property="og:image" content="http://img.khan.co.kr/spko/storytelling/2019/labordeath/fb_thumb_labor2.jpg" />
+    <meta property="og:image" content="http://img.khan.co.kr/spko/storytelling/2019/labordeath/fb_thumb_labor_20200115.jpg" />
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="http://news.khan.co.kr/kh_storytelling/2019/labordeath/">
     <meta name="twitter:creator" content="@kyunghyang">
-    <meta name="twitter:title" content="매일 김용균이 있었다…1692번의 죽음의 기록">
+    <meta name="twitter:title" content="매일 김용균이 있었다…1748번의 죽음의 기록">
     <meta name="twitter:description" content="오늘도 ‘3명’의 노동자가 사고로 목숨을 잃었다. 이들의 죽음이 통계숫자로만 남지 않도록 한 사람, 한 사람의 죽음을 기록했다.">
-    <meta name="twitter:image" content="http://img.khan.co.kr/spko/storytelling/2019/labordeath/fb_thumb_labor2.jpg">
+    <meta name="twitter:image" content="http://img.khan.co.kr/spko/storytelling/2019/labordeath/fb_thumb_labor_20200115.jpg">
 
     <!-- 스타일시트 태그-->
-	<link rel="stylesheet" type="text/css" href="http://img.khan.co.kr/spko/storytelling/recothumb/digiReco.css" />
+	<link rel="stylesheet" type="text/css" href="https://img.khan.co.kr/spko/storytelling/recothumb/digiReco.css" />
  	<link rel="stylesheet" type="text/css" href="<?php echo $css; ?>" />
 	<link href="https://fonts.googleapis.com/css?family=Noto+Serif+KR:400,700" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
 
     <!-- 스크립트 태그-->
-	<script type="text/javascript" src="http://www.khan.co.kr/spko/js/plugin/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="https://www.khan.co.kr/spko/js/plugin/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="//www.khan.co.kr/spko/js/jquery.cookie.js"></script>
 	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-color/1.2.1/d3-color.js"></script>
 	<script src="https://d3js.org/d3-ease.v1.min.js"></script>
-	<script type="text/javascript" src="http://news.khan.co.kr/kh_storytelling/digiReco.js"></script>
-	<script type="text/javascript" src="http://www.khan.co.kr/spko/js/khan_analystics.js"></script>
-
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
+	<script type="text/javascript" src="https://news.khan.co.kr/kh_storytelling/digiReco.js"></script>
+	<script type="text/javascript" src="https://www.khan.co.kr/spko/js/khan_analystics.js"></script>
 	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79840639-2"></script>
 	<!-- Google Tag Manager -->
 	<script>
@@ -95,7 +96,7 @@
 			<div class="loading-gif">
 				<div class="loading-title">
 					<div class="title-holder">
-						<img src="http://img.khan.co.kr/spko/storytelling/2019/labordeath/title-cover-1692.png" alt="1692" class="cover">
+						<img src="http://img.khan.co.kr/spko/storytelling/2019/labordeath/title-cover-1748.png" alt="1748" class="cover">
 						<div class="flare"><img src="http://img.khan.co.kr/spko/storytelling/2019/labordeath/flare.gif	" alt=""></div>
 					</div>
 				</div>
@@ -140,83 +141,7 @@
 
 			<!-- 공통 Header (S)-->
 			<div id="header" class="common_header common_header_black">
-				<!-- 탑영역 -->
-				<div class="top_area_holder">
-					<div class="top_area">
-						<dl class="family_site">
-							<dd>
-								<a href="http://sports.khan.co.kr" target="_blank" title="스포츠경향">스포츠경향</a>
-								<span>I</span>
-								<a href="http://weekly.khan.co.kr" target="_blank" title="주간경향">주간경향</a>
-								<span>I</span>
-								<a href="http://lady.khan.co.kr" target="_blank" title="레이디경향">레이디경향</a>
-								<span>I</span>
-								<a href="http://english.khan.co.kr/" target="_blank" title="ENGLISH" class="eng">ENGLISH</a>
-							</dd>
-						</dl>
-						<dl class="membership">
-							<dd id="log_out" style="display:none">
-								<a class="log" href="javascript:;" onclick="logout();" title="로그아웃">로그아웃</a>
-								<span>I</span>
-								<a href="https://member.khan.co.kr/login/modify.html" title="정보변경">정보변경</a>
-								<span>I</span>
-								<a href="http://epaper.khan.co.kr/">지면보기</a>
-								<span>I</span>
-								<a href="http://smile.khan.co.kr/gudoc/gudoc_input_step3.html?media_cd=201" target="_blank">구독신청</a>
-							</dd>
-
-							<script type="text/javascript">
-							function logout()
-							{
-								window.location.href="https://member.khan.co.kr/login/logout.html?url="+ encodeURIComponent(location.href);
-							}
-							</script>
-
-							<dd id="log_in">
-								<a class="log" href="https://member.khan.co.kr/login/login.html?url=http%3A%2F%2Fnews.khan.co.kr%2Fkh_storytelling%2F2019%2Flabordeath%2F" title="로그인">로그인</a>
-								<span>I</span>
-								<a href="https://member.khan.co.kr/login/general.html?url=http%3A%2F%2Fnews.khan.co.kr%2Fkh_storytelling%2F2019%2Flabordeath%2F">회원가입</a>
-								<span>I</span>
-								<a href="http://epaper.khan.co.kr/">지면보기</a>
-								<span>I</span>
-								<a href="http://smile.khan.co.kr/gudoc/gudoc_input_step3.html?media_cd=201" target="_blank">구독신청</a>
-							</dd>
-						</dl>
-					</div>
-				</div>
-				<script>
-					if (document.cookie.match(/khan_uid/i) || document.cookie.match(/khan_id/i))
-					{
-						jQuery("#log_in").hide();
-						jQuery("#log_out").show();
-					}else
-					{
-						jQuery("#log_in").show();
-						jQuery("#log_out").hide();
-					}
-				</script>
-				<!-- // 탑영역 -->
-				<div class="logo_area">
-					<div class="sec_title">
-						<a href="//news.khan.co.kr/kh_interactive/index.html">인터랙티브</a>
-					</div>
-					<div class="sub_logo">
-						<h2>
-							<a href="javascript:" onclick="javascript:main_go_click();" title="경향닷컴 홈으로 이동"><img src="http://img.khan.co.kr/spko/storytelling/2019/labordeath/logo_trans.png" alt=""></a>
-						</h2>
-					</div>
-					<div class="sns_wrap">
-						<div class="social">
-							<ul>
-								<li class="facebook"><a href="http://facebook.com/kyunghyangshinmun" title="경향신문 페이스북" target="_blank">	페이스북</a></li>
-								<li class="twitter"><a href="http://twitter.com/kyunghyang" title="경향신문 트위터" target="_blank">트위터</a></li>
-								<li class="instagram"><a href="https://www.instagram.com/kyunghyangshinmun/" title="경향신문 인스타그램" target="_blank">인스타그램</a></li>
-								<li class="youtube"><a href="https://www.youtube.com/thekyunghyangtv" title="경향신문 유튜브" target="_blank">유튜브</a></li>
-							</ul>
-							<span class="bar"></span>
-						</div>
-					</div>
-				</div>
+				<?php include_once("../../kh_common_top.html");?>
 			</div>
 			<!-- 공통 Header (E)-->
 
@@ -336,7 +261,7 @@
 							<div class="title-holder">
 								<div class="main-title">
 									<div class="title-holder">
-										<img src="http://img.khan.co.kr/spko/storytelling/2019/labordeath/title-cover-1692.png" alt="1685" class="cover">
+										<img src="http://img.khan.co.kr/spko/storytelling/2019/labordeath/title-cover-1748.png" alt="1685" class="cover">
 										<div class="flare"><img src="http://img.khan.co.kr/spko/storytelling/2019/labordeath/flare.gif	" alt=""></div>
 									</div>
 								</div>
@@ -477,8 +402,8 @@
 											<div class="victim">
 												<p class="person-info"></p>
 											</div>
-											<p class="count-index"><span id="userSelect" class="select">0</span><span class="slash">/</span><span class="total">1692명</span></p>
-											<p class="period">(2018년 1월~2019년 9월)</p>
+											<p class="count-index"><span id="userSelect" class="select">0</span><span class="slash">/</span><span class="total">1748명</span></p>
+											<p class="period">(2018년 1월~2019년 10월)</p>
 										</div>
 										<div class="icon-wrap icon-block">
 											<svg class="icon-holder" id="iconHolder" x="0px" y="0px">
@@ -489,11 +414,16 @@
 											</div>
 										</div>
 									</div>
-									<div class="sm-info">* 이 데이터베이스는 2018년 1월부터 2019년 9월 말까지 발생한 사망사고에 대해 한국산업안전보건공단이 작성한 재해조사 의견서를 바탕으로 제작되었습니다. 이 의견서는 한정애 더불어민주당 의원을 통해 입수했습니다. 이 기간 동안 모두 1627건의 사망 사고가 발생했지만 모두 보고서가 작성된 것은 아닙니다. 경향신문이 전수 확보해 입력한 보고서는 1305건으로, 사망자는 있으나 재해조사 의견서를 확인할 수 없는 사건의 경우 일부 사고 정보가 미상 처리되었습니다.</div>
+									<!--수정 필요 -->
+									<div class="update-info">
+										<p>*2018년 1월 ~ 2019년 10월 (Last Update 2020. 1. 15)</p>
+										<p>*재해조사 의견서 수 : 1361건</p>
+									</div>
+									<div class="sm-info">* 이 데이터베이스는 한국산업안전보건공단이 작성한 재해조사 의견서를 바탕으로 제작되었습니다. 의견서는 한정애 더불어민주당 의원을 통해 입수했습니다. 조사 기간 동안 발생한 사망 사고 중 의견서가 작성되지 않은 사건은 일부 정보가 누락돼 있습니다. 경향신문은 추가로 의견서를 입수하는 대로 계속 업데이트할 예정입니다.</div>
 									<div class="para-box archive-para">
-										<p>인천의 한 기계식 주차설비 건설 현장에서 일하던 스물두 살 김호민씨(가명)는 19m 높이에 올라 철골 구조물을 콘크리트 벽에 고정하고 있었습니다. 밟고 선 것은 폭 13㎝의 파레트 거치대뿐. 최후의 생명줄인 안전대 고리를 걸 만한 설비도 없었습니다. 그는 볼트를 조이기 위해 몸을 움직이다가 아차 하는 순간 지하 2층 바닥으로 떨어져 사망했습니다.</p>
+										<p>인천의 한 기계식 주차설비 건설 현장에서 일하던 스물두 살 김호민씨(가명·22)는 19m 높이에 올라 철골 구조물을 콘크리트 벽에 고정하고 있었습니다. 밟고 선 것은 폭 13㎝의 파레트 거치대뿐. 최후의 생명줄인 안전대 고리를 걸 만한 설비도 없었습니다. 그는 볼트를 조이기 위해 몸을 움직이다가 아차 하는 순간 지하 2층 바닥으로 떨어져 사망했습니다.</p>
 										<p>추락 사고는 끔찍하게도 하루에 한 번꼴(0.96일)로 발생했습니다. 재해조사 의견서를 토대로 자주 나오는 사고 유형을 뽑아 보니 호민 씨처럼 안전대, 안전난간, 추락방호망 등 아무런 안전 장치도 없는 곳에서 어떤 안전 장비도 갖추지 못한 채 높은 곳에 올라갔다 떨어져 사망한 사고는 이례적인 일이 아니었습니다. 노동자들은 닷새마다 한 번꼴(4.45일)로 그렇게 죽었습니다.</p>
-										<p>추락 사고 다음으로 많이 발생한 것이 끼임 사고입니다. 지난해 3월 전남의 한 제조업체에서 컨베이어 벨트 청소작업을 하던 강지우씨(가명·31)는 산업용 로봇의 팔에 맞아 사망했습니다. 로봇은 지우씨를 포장해야 할 제품으로 인식했습니다. 사람이 로봇 가까이 접근하면 자동으로 멈추는 안전장치가 있었지만 제대로 작동하지 않았습니다.</p>
+										<p>추락 사고 다음으로 많이 발생한 것이 끼임 사고입니다. 2018년 3월 전남의 한 제조업체에서 컨베이어 벨트 청소작업을 하던 강지우씨(가명·31)는 산업용 로봇의 팔에 맞아 사망했습니다. 로봇은 지우씨를 포장해야 할 제품으로 인식했습니다. 사람이 로봇 가까이 접근하면 자동으로 멈추는 안전장치가 있었지만 제대로 작동하지 않았습니다.</p>
 										<p>지우씨와 비슷하게 기계를 멈추지 않고 정비나 확인 작업을 하거나, 안전 장치 불량·강제해제, 순간정지 장치 미비로 발생한 사고 역시 분류해 보니 155건에 달했습니다. 지우 씨의 사고는 어쩌면 예견된 일이었는지도 모릅니다.</p>
 										<p>그 밖에도 자주 나오는 사고 유형은 위의 분류창에서 확인해 보실 수 있습니다.</p>
 									</div>
@@ -605,7 +535,7 @@
 											<div class="sm-info">* 히트맵의 각 박스 위에 <u>마우스를 올리시면</u> 날짜와 사망자 정보를 볼 수 있습니다. <br/>사망자 수 버튼을 <u>클릭</u>하시면 해당 규모에 해당하는 날짜 박스만 강조됩니다.</div>
 
 											<div class="para-box">
-												<p>노동자들은 1년 9월 동안 단 67일을 제외하고 매일 사고로 사망했습니다. 사망자가 1명인 날은 흔하고 4명 이상인 날도 많습니다. 지난해 8월21일에는 하루에만 14명의 노동자가 사고로 사망했습니다.</p>
+												<p>노동자들은 1년 9개월 동안 단 67일을 제외하고 매일 사고로 사망했습니다. 사망자가 1명인 날은 흔하고 4명 이상인 날도 많습니다. 2018년 8월21일에는 하루에만 14명의 노동자가 사고로 사망했습니다.</p>
 												<p>사망 사고의 21.7%는 주말, 공휴일에 발생했습니다. 많은 시민들이 휴식을 취하고 있는 사이에도 노동자들은 사고를 비껴가지 못했습니다. </p>
 												<p>절반이 넘는 사고가 건설 현장에서 발생했는데, 이와도 무관치 않아 보입니다. 전국건설노조 이승현 노동안전국장은 “건설 현장은 주휴수당이 없고 일만 있으면 휴일에도 나가야 하다 보니 충분히 쉬지 못한 채 계속 일하게 돼 금·토·일에 사고가 많다”고 말했습니다.</p>
 											</div>
@@ -634,8 +564,8 @@
 
 
 											<div class="para-box">
-												<p>사고가 발생한 원청 기준으로 살펴보면 현대차 그룹이 32건의 사망자로 1위를 기록했고, 다음으로 대림 그룹(31건), 포스코 그룹(27건), 대우건설(26건) 등의 순으로 많았습니다. 사고가 많이 발생한 건설업이나 조선업 계열사를 둔 그룹이 상위를 차지한 것으로 보입니다.</p>
-												<p>지난해 12월 비정규직 노동자 김용균씨가 컨베이어벨트에 끼여 숨진 후 28년 만에 산업안전보건법이 개정됐지만 현장 노동자들의 안전은 여전히 보장받는다고 보기 어렵습니다. 노동자들은 "100만원짜리 공사가 40만원이 되는 일도 흔하다"고 합니다. ‘다단계 하도급’의 사다리 위에 불안하게 놓인 노동자들이 안전을 신경쓸 수 있을까요? 원청, 그 중에서도 대기업 계열사의 책임을 묻는 이유입니다. 중대재해가 발생해도 사업주와 원청에 대해서는 솜방망이 처벌만 이뤄지는 현실도 여전합니다.</p>
+												<p>사고가 발생한 원청 기준으로 살펴보면 현대차 그룹이 32건의 사고로 1위를 기록했고, 다음으로 대림 그룹(31건), 포스코 그룹(27건), 대우건설(26건) 등의 순으로 많았습니다. 사고가 많이 발생한 건설업이나 조선업 계열사를 둔 그룹이 상위를 차지한 것으로 보입니다.</p>
+												<p>2018년 12월 비정규직 노동자 김용균씨가 컨베이어벨트에 끼여 숨진 후 28년 만에 산업안전보건법이 개정됐지만 현장 노동자들의 안전은 여전히 보장받는다고 보기 어렵습니다. 노동자들은 "100만원짜리 공사가 40만원이 되는 일도 흔하다"고 합니다. ‘다단계 하도급’의 사다리 위에 불안하게 놓인 노동자들이 안전을 신경쓸 수 있을까요? 원청, 그 중에서도 대기업 계열사의 책임을 묻는 이유입니다. 중대재해가 발생해도 사업주와 원청에 대해서는 솜방망이 처벌만 이뤄지는 현실도 여전합니다.</p>
 											</div>
 										</div>
 										<!--원청회사별-->
@@ -680,7 +610,7 @@
 
 
 											<div class="para-box">
-												<p>지난해 2월 서울의 한 공사 현장에서 일하던 강수덕씨(가명·63)는 사다리 위에 올라가 배관 연결 작업을 하던 중 뒤로 넘어져 사망했습니다. 강씨가 딛고 서 있던 사다리 발판의 높이는 60㎝에 불과했습니다.</p>
+												<p>2018년 2월 서울의 한 공사 현장에서 일하던 강수덕씨(가명·63)는 사다리 위에 올라가 배관 연결 작업을 하던 중 뒤로 넘어져 사망했습니다. 강씨가 딛고 서 있던 사다리 발판의 높이는 60㎝에 불과했습니다.</p>
 												<p>흔히 추락사고라 하면 수십 미터 높이를 상상하지만 실제로는 그렇지 않았습니다. 0~5m 사이의 높이에서 발생한 추락사가 전체의 절반 가까이(43.9%)를 차지했습니다.</p>
 												<p>강태선 세명대 교수(보건안전공학)는 “낮은 높이 추락 사고는 A형 사다리 사용도 주요 원인으로 보인다”며 “연구자들은 알지만 정작 당사자들은 그 높이에서 떨어지면 죽을 수도 있다고 전혀 생각하지 못하고 작업한다”고 말했습니다. 실제 강씨처럼 사다리를 사용하다가 추락해 사망한 사고는 지난 1년9개월간 36건 발생했습니다.</p>
 											</div>
@@ -798,7 +728,7 @@
 																</div>
 																<div class="art-title">죽음을 예견하고<br/>출근하는 노동자는 없다</div>
 																<div class="go-art">
-																	<div class="more">지면기사 보러가기</div>
+																	<div class="more">기사 보러가기</div>
 																</div>
 															</div>
 														</div>
@@ -816,7 +746,7 @@
 																</div>
 																<div class="art-title">데이터로 보는 한국의 산재</div>
 																<div class="go-art">
-																	<div class="more">지면기사 보러가기</div>
+																	<div class="more">기사 보러가기</div>
 																</div>
 															</div>
 														</div>
@@ -834,79 +764,109 @@
 																</div>
 																<div class="art-title">매일 김용균이 있었다, 지면 인포그래픽</div>
 																<div class="go-art">
+																	<div class="more">기사 보러가기</div>
+																</div>
+															</div>
+														</div>
+													</a>
+												</li>
+												<p class="publish-info">2회차</p>
+												<li>
+													<a href="http://news.khan.co.kr/kh_news/khan_art_view.html?artid=201911250600025&code=940702">
+														<div class="each-banner">
+															<div class="each-banner-bg banner-bg--3"></div>
+															<div class="each-banner-wrap">
+																<div class="art-info">
+																	<div class="deco-line"></div>
+																	<p class="episode">episode 4</p>
+																	<p class="publish-date">2019년 11월 25일</p>
+																</div>
+																<div class="art-title">현장의 목소리,<br/>“안전장치 설치 불가능한 현장은 없다”</div>
+																<div class="go-art">
+																	<div class="more">기사 보러가기</div>
+																</div>
+															</div>
+														</div>
+													</a>
+												</li>
+
+												<li>
+													<a href="http://news.khan.co.kr/kh_news/khan_art_view.html?artid=201911250600035&code=940702">
+														<div class="each-banner">
+															<div class="each-banner-bg banner-bg--7"></div>
+															<div class="each-banner-wrap">
+																<div class="art-info">
+																	<div class="deco-line"></div>
+																	<p class="episode">episode 5</p>
+																	<p class="publish-date">2019년 11월 25일</p>
+																</div>
+																<div class="art-title">산업안전보건공단 출신 한정애 의원 인터뷰</div>
+																<div class="go-art">
+																	<div class="more">기사 보러가기</div>
+																</div>
+															</div>
+														</div>
+													</a>
+												</li>
+												<li>
+													<a href="http://news.khan.co.kr/kh_news/khan_art_view.html?artid=201911250600045&code=940702">
+														<div class="each-banner">
+															<div class="each-banner-bg banner-bg--8"></div>
+															<div class="each-banner-wrap">
+																<div class="art-info">
+																	<div class="deco-line"></div>
+																	<p class="episode">episode 6</p>
+																	<p class="publish-date">2019년 11월 25일</p>
+																</div>
+																<div class="art-title">김훈 작가 특별기고<br/>‘죽음의 자리로 또 밥벌이 간다’</div>
+																<div class="go-art">
+																	<div class="more">기사 보러가기</div>
+																</div>
+															</div>
+														</div>
+													</a>
+												</li>
+											</ul>
+										</div>
+										<div class="banner-list">
+											<ul>
+												<p class="publish-info">3회차</p>
+												<li>
+													<a href="http://news.khan.co.kr/kh_news/khan_art_view.html?artid=201911280600015&code=990105">
+														<div class="each-banner">
+															<div class="each-banner-bg banner-bg--6"></div>
+															<div class="each-banner-wrap">
+																<div class="art-info">
+																	<div class="deco-line"></div>
+																	<p class="episode">episode 7</p>
+																	<p class="publish-date">2019년 11월 28일</p>
+																</div>
+																<div class="art-title">[기자메모] 기억하라,<br/>죽임을 ‘당한’ 그들을</div>
+																<div class="go-art">
 																	<div class="more">지면기사 보러가기</div>
 																</div>
 															</div>
 														</div>
 													</a>
 												</li>
-												<p class="publish-info">2회차 <span>(2019년 11월 다섯째주 공개)</span></p>
-												<li class="banner-block">
-													<div class="each-banner">
-														<div class="each-banner-bg banner-bg--3"></div>
-														<div class="each-banner-wrap">
-															<div class="art-info">
-																<div class="deco-line"></div>
-																<p class="episode">episode 4</p>
-																<p class="publish-date">2019년 11월 다섯째주 공개</p>
-															</div>
-															<div class="art-title">현장의 목소리,<br/>“노동자의 안전불감증 때문이 아니다”</div>
-															<div class="go-art">
-																<div class="more">지면기사 보러가기</div>
-															</div>
-														</div>
-													</div>
-												</li>
-
-												<li class="banner-block">
-													<div class="each-banner">
-														<div class="each-banner-bg banner-bg--6"></div>
-														<div class="each-banner-wrap">
-															<div class="art-info">
-																<div class="deco-line"></div>
-																<p class="episode">episode 5</p>
-																<p class="publish-date">2019년 11월 다섯째주 공개</p>
-															</div>
-															<div class="art-title">한국만 OECD 산업재해 1위 불명예<br/>뒤집어쓰는 이유</div>
-															<div class="go-art">
-																<div class="more">지면기사 보러가기</div>
+												<li>
+													<a href="http://news.khan.co.kr/kh_news/khan_art_view.html?artid=201911280600055&code=940100">
+														<div class="each-banner">
+															<div class="each-banner-bg banner-bg--4"></div>
+															<div class="each-banner-wrap">
+																<div class="art-info">
+																	<div class="deco-line"></div>
+																	<p class="episode">episode 8</p>
+																	<p class="publish-date">2019년 11월 28일</p>
+																</div>
+																<div class="art-title">곳곳이 ‘지뢰밭’,<br/>패트롤카 동행 르포</div>
+																<div class="go-art">
+																	<div class="more">지면기사 보러가기</div>
+																</div>
 															</div>
 														</div>
-													</div>
-												</li>
-												<li class="banner-block">
-													<div class="each-banner">
-														<div class="each-banner-bg banner-bg--4"></div>
-														<div class="each-banner-wrap">
-															<div class="art-info">
-																<div class="deco-line"></div>
-																<p class="episode">episode 6</p>
-																<p class="publish-date">2019년 11월 다섯째주 공개</p>
-															</div>
-															<div class="art-title">그날도 안전망은 없었다,<br/>패트롤카 동행 르포</div>
-															<div class="go-art">
-																<div class="more">지면기사 보러가기</div>
-															</div>
-														</div>
-													</div>
-												</li>
-												<li class="banner-block">
-													<div class="each-banner">
-														<div class="each-banner-bg banner-bg--7"></div>
-														<div class="each-banner-wrap">
-															<div class="art-info">
-																<div class="deco-line"></div>
-																<p class="episode">episode 7</p>
-																<p class="publish-date">2019년 11월 다섯째주 공개</p>
-															</div>
-															<div class="art-title">산업안전보건공단 출신 한정애 의원</div>
-															<div class="go-art">
-																<div class="more">지면기사 보러가기</div>
-															</div>
-														</div>
-													</div>
-												</li>
-
+													</a>
+												</li>												
 											</ul>
 										</div>
 									</div>
@@ -1047,9 +1007,6 @@
 	<script type="text/javascript" src="<?php echo $js; ?>"></script>
 	<script type="text/javascript" src="<?php echo $data; ?>"></script>
 	<script type="text/javascript" src="<?php echo $path; ?>"></script>
-	<!-- <script type="text/javascript" src="<?php echo $calendar; ?>"></script>
-	<script type="text/javascript" src="<?php echo $victim; ?>"></script>
-	<script type="text/javascript" src="<?php echo $acc; ?>"></script>-->
 	<script type="text/javascript" src="<?php echo $total; ?>"></script>
 	<script type="text/javascript" src="<?php echo $accGeoCode; ?>"></script>
 
